@@ -1,12 +1,5 @@
-﻿//寻找最大不含重复字符的字符串，暴力破解，建立哈希表
-#include<iostream>
-#include<string>
-#include<map>
-#include<set>
-#include<cstdio>
-#include<numeric>
-using namespace std;
-/*给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
+﻿//寻找最大不含重复字符的字符串，暴力破解，建立哈希表。实际上难度不高，主要是想明白滑动窗的概；
+/*给定一个字符串，请你找出其中不含有重复字符的 最长子串的长度。
 
 示例 1:
 输入: "abcabcbb"
