@@ -1,0 +1,4 @@
+# 各个文件夹介绍（leetcode刷题会优先从tag100开始刷起，然后最好遍历完所有的题目；）
+## c++：c++的leetcode相关题目
+## python：使用python解决的leetcode相关题目
+## java: 使用java解决的leetcode相关题目
