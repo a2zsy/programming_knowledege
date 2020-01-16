@@ -1,1 +1,49 @@
+给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
 
+方法一： 用两遍哈希表！
+        注意点：对于6-3=3的情况要多加一个判断条件hs.get(temp)!=i
+               用数值作为键，索引作为值
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] result=new int[2];
+        
+        HashMap<Integer,Integer> hs =new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            hs.put(nums[i],i);
+        } 
+
+        for(int i=0;i<nums.length;i++){
+            int temp=target-nums[i];
+            if(hs.containsKey(temp)&&hs.get(temp)!=i){
+                result[0]=i;
+                result[1]=hs.get(temp);
+                return result;
+            }
+        }
+
+        return result;
+    }
+}
+
+
+方法二：用一遍哈希表
+       注意点：边插入边查找
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] result=new int[2];
+        
+        HashMap<Integer,Integer> hs =new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            int temp=target-nums[i];
+            if(hs.containsKey(temp)&&hs.get(temp)!=i){
+                result[0]=i;
+                result[1]=hs.get(temp);
+                return result;
+            }
+            hs.put(nums[i],i);
+        } 
+
+
+        return result;
+    }
+}
