@@ -1,0 +1,79 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int count1=0;
+        int count2=0;
+        ListNode cur1=l1;
+        ListNode cur2=l2;
+        while(l1!=null){
+            l1=l1.next;
+            count1++;
+        }
+        while(l2!=null){
+            l2=l2.next;
+            count2++;
+        }
+        
+        
+        int[] arr1=new int[count1];
+        int[] arr2=new int[count2];
+        int i=0;
+        int j=0;
+        while(cur1!=null){
+            arr1[i]=cur1.val;
+            i++;
+            cur1=cur1.next;
+        }
+        while(cur2!=null){
+            arr2[j]=cur2.val;
+            j++;
+            cur2=cur2.next;
+        }
+        
+        int[] arr3=two_add(arr1,arr2);
+        ListNode head=new ListNode(arr3[0]);
+        ListNode cur=head;
+        for(i=1;i<arr3.length;i++){
+            if(arr3[i]==-1){break;}
+            ListNode Node=new ListNode(arr3[i]);
+            head.next=Node;
+            head=Node;
+        }
+        return cur;
+    }
+    
+    
+    public int[] two_add(int[] arr1,int[] arr2){
+        int l=arr1.length>arr2.length?arr1.length:arr2.length;
+        int m=l==arr1.length?arr2.length:arr1.length;
+        int[] arr3=new int[l+1];
+        int c=0;
+        for(int i=0;i<l;i++){
+            if(i>=m){
+                arr3[i]=(arr1.length>arr2.length?arr1[i]:arr2[i])+c;
+                c=0;
+                if(arr3[i]>=10){
+                arr3[i]=arr3[i]-10;
+                c=1;
+                }
+            }
+            else{
+                arr3[i]=arr1[i]+arr2[i]+c;
+                c=0;
+                if(arr3[i]>=10){
+                arr3[i]=arr3[i]-10;
+                c=1;
+                }
+            }
+        }
+        if(c==1){arr3[l]=1;}else{arr3[l]=-1;}
+        return arr3;
+    }
+}
