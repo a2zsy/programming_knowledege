@@ -1,3 +1,44 @@
+方法一：将长度短的数组的元素一个一个从右半部分移到左半部分----------很多边界条件需要注意！！！
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int n=nums1.length;
+        int m=nums2.length;
+        int[] a=n>m?nums2:nums1;
+        int[] b=a==nums1?nums2:nums1;
+        m=a.length;
+        n=b.length;
+        int half=(m+n+1)/2;
+        int i=0;
+        int j=half-i;
+        while(i<m&&a[i]<b[j-1]){
+            i++;
+            j=half-i;
+        }
+        if((n+m)%2==0){
+            if(i==0){
+                if(m==0){return (b[j-1]+b[j])/2.0;}
+                else if(j==n){return (a[i]+b[j-1])/2.0;}
+                else{return (b[j-1]+Math.min(a[i],b[j]))/2.0;}
+            }
+            else if(i==m){
+                    if(j==0){
+                        return (a[i-1]+b[j])/2.0;
+                    }else{
+                        return (Math.max(a[i-1],b[j-1])+b[j])/2.0;
+                    }
+            }else{
+                return (Math.max(a[i-1],b[j-1])+Math.min(a[i],b[j]))/2.0;
+            }
+        }else{
+            if(i==0){
+                return b[j-1];
+            }else{
+                return Math.max(a[i-1],b[j-1]);
+            }
+        }
+    }
+}
+方法二：官方题解---------时间复杂度log(n)
 class Solution {
     public  double findMedianSortedArrays(int[] nums1, int[] nums2) {
         if(nums1.length>nums2.length){
