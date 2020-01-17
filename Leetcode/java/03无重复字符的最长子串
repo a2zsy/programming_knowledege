@@ -1,22 +1,45 @@
+方法一：暴力法，从每一个位置开始找以该位置为起始点的最长不重复子串
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-        char[] ch=s.toCharArray();
-        return findLength(0,ch);
-    }
-    
-    public int findLength(int k,char[] arr){
-        HashMap<String,Integer> hs=new HashMap<>();
-        int l=0;
-        for(int i=k;i<arr.length;i++){
-            if(hs.containsKey(String.valueOf(arr[i]))){
-                int index=hs.get(String.valueOf(arr[i]));
-                int l2=findLength(index+1,arr);
-                return l>l2?l:l2;
-            }
-            hs.put(String.valueOf(arr[i]),i);
-            l++;
+        if(s==null){return 0;}
+        int result=0;
+        for(int i=0;i<s.length();i++){
+            int len=lengthOfSubstrig(s.substring(i));
+            result=result>len?result:len;
+            if(result>=s.length()-i){return result;}
         }
-        return l;
+        return result;
+    }
+
+    public int lengthOfSubstrig(String s){
+        HashSet<Character>  hs=new HashSet<>();
+        for(int i=0;i<s.length();i++){
+            if(hs.contains(s.charAt(i))){return i;}
+            else{hs.add(s.charAt(i));}
+        }
+        return s.length();
+    }
+}
+
+方法二：滑动窗口，在hashset中把重复的元素remove.----------两个指针！一个指向起点，一个指向终点！遇到重复字符，逐个删除直到不重复！！！
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if(s==null){return 0;}
+        int result=0;
+        int len=s.length();
+        HashSet<Character> hs=new HashSet<>();
+        int i=0;int j=0;
+        while(i<len&&j<len){
+            if(!hs.contains(s.charAt(i))){
+                hs.add(s.charAt(i));
+                i++;
+                result=result>(i-j)?result:(i-j);
+            }else{
+                hs.remove(s.charAt(j));
+                j++;
+            }
+        }
+        return result;
     }
     
     
