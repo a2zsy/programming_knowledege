@@ -1,3 +1,5 @@
+方法一最笨，方法二是自己写的两指针移动，比较笨，方法三是官方题解，有多个地方的优化
+
 方法一：比较笨，将链表存储在数组，数组相加后，再转成列表
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
@@ -120,4 +122,24 @@ class Solution {
         }
         return head;
     }
+}
+
+方法三：优化1-进位c不用ifelse，用整除；优化2-不需要写三个循环，将长度较短的链表后面的值自动补成0；优化3-用一个哑节点
+public ListNode addTwoNumbers(ListNode l1,ListNode l2){
+    ListNode dummyhead=new ListNode(0);
+    ListNode cur=dummyhead;
+    ListNode p1=l1;
+    ListNode p2=l2;
+    int c=0;
+    while(p1!=null||p2!=null){
+        int x=p1==null?0:p1.val;
+        int y=p2==null?0:p2.val;
+        cur.next=new ListNode((x+y+c)%10);
+        cur=cur.next;
+        c=(x+y+c)/10;
+        p1=p1==null?null:p1.next;
+        p2=p2==null?null:p2.next;
+    }
+    if(c==1){cur.next=new ListNode(1);}
+    return dummyhead.next;
 }
