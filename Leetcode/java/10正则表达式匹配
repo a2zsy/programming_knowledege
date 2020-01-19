@@ -1,1 +1,15 @@
 
+方法一：回溯---每次比较第一位是否匹配。对于第二位是*的情况进行判断
+class Solution {
+    public boolean isMatch(String s, String p) {
+        if(p.isEmpty()){return s.isEmpty();}
+        boolean firstmatch=!s.isEmpty()&&(s.charAt(0)==p.charAt(0)||p.charAt(0)=='.');
+        if(p.length()>=2&&p.charAt(1)=='*'){
+            return (firstmatch&&isMatch(s.substring(1),p))||isMatch(s,p.substring(2));
+        }
+        return firstmatch&&isMatch(s.substring(1),p.substring(1));
+    }
+}
+
+
+方法二:动态规划
