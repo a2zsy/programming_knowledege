@@ -13,3 +13,4 @@ class Solution {
 
 
 方法二:动态规划
+用dp(i, j) 来应对剩余相同参数的函数调用。dp[0][0]是最终结果。dp[s.length()][p.length()]=true.
