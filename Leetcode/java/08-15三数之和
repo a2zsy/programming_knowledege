@@ -1,1 +1,35 @@
-方法一
+补充ArrayList和LinkList区别：
+  ArrayList 底层实现就是数组，且ArrayList实现了RandomAccess，表示它能快速随机访问存储的元素，通过下标 index 访问，只是我们需要用 get() 方法的形式， 数组支持随机访问， 查询速度快， 增删元素慢；
+  LinkedList 底层实现是链表， LinkedList 没有实现 RandomAccess 接口，链表支持顺序访问， 查询速度慢， 增删元素快
+
+
+方法一:怎么判断重复的元素------if(i > 0 && nums[i] == nums[i-1])--------------当前元素与前一个元素比较，而不是当前元素与后面比较
+       优化思路：数组排序之后，三数之中最小的如果大于0，退出循环
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> list =new ArrayList<>();
+        Arrays.sort(nums);
+        for(int i=0;i<nums.length-2;i++){
+            if(nums[i]>0){break;}
+            if(i>0&&nums[i]==nums[i-1]){continue;}
+            int j=i+1;
+            int k=nums.length-1;
+            while(j<k){
+                if(nums[i]+nums[j]+nums[k]>0){
+                    k--;
+                    //while(k>=0&&nums[k]==nums[k+1]){k--;}-----多余，拖慢时间效率
+                }else if(nums[i]+nums[j]+nums[k]<0){
+                    j++;
+                    //while(j<nums.length&&nums[j]==nums[j-1]){j++;}-----多余，拖慢时间效率
+                }else{
+                    list.add(Arrays.asList(nums[i],nums[j],nums[k]));
+                    j++;
+                    while(j<nums.length&&nums[j]==nums[j-1]){j++;}
+                    k--;
+                    while(k>=0&&nums[k]==nums[k+1]){k--;}
+                }
+            }
+        }
+        return list;
+    }
+}
