@@ -1,0 +1,22 @@
+方法一：使用栈，遇到右括号就弹出一个看是否配对，不配对直接返回false.---------java中Stack的使用
+class Solution {
+    public boolean isValid(String s) {
+        if(s.length()==0){return true;}
+        Stack<Character> sk=new Stack<>();
+        char[] ch=s.toCharArray();
+        for(int i=0;i<ch.length;i++){
+            if(ch[i]==')'||ch[i]=='}'||ch[i]==']'){
+                if(sk.isEmpty()){return false;}
+                char temp=sk.pop();
+                if((temp=='('&&ch[i]==')')||(temp=='{'&&ch[i]=='}')||(temp=='['&&ch[i]==']')){}
+                else {
+                    return false;
+                }
+            }else{
+                sk.push(ch[i]);
+            }   
+        }
+        if(sk.isEmpty()){return true;}
+        else{return false;}
+    }
+}
