@@ -1,1 +1,21 @@
-方法一：
+方法一：递归，每一位用一个循环，因为每一位对应几个字母
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String> list=new ArrayList<>();
+        if(digits.length()==0){return list;}
+        String[] str=new String[]{
+            "abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"
+        };
+        stringCombination("",digits,list,str);
+        return list;
+    }
+
+    public void stringCombination(String bef,String s,List<String> list,String[] str){
+        if(s.length()==0){list.add(bef);return; }
+        for(int j=0;j<str[s.charAt(0)-'2'].length();j++){
+            String ss=bef+str[s.charAt(0)-'2'].charAt(j);
+            stringCombination(ss,s.substring(1),list,str);
+        }
+        
+    }
+}
