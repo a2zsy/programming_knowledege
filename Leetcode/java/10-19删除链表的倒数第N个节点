@@ -1,0 +1,19 @@
+方法一：一趟扫描关键----用双指针
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        int q=1;
+        ListNode slow=head;
+        ListNode quick=head;
+        while(q<=n){
+            quick=quick.next;
+            q++;
+        }
+        while(quick!=null&&quick.next!=null){
+            quick=quick.next;
+            slow=slow.next;
+        }
+        if(quick==null){return head.next;}
+        slow.next=slow.next.next;
+        return head;
+    }
+}
