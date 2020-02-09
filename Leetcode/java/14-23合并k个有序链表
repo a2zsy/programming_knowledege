@@ -25,7 +25,7 @@ class Solution {
     }
 }
 
-方法二：两两链表合并---------关键点i<j,而不是i<=j!!!!!!!,如果取等，将会对同一条链表进行比较，地址相同，陷入死循环！！！！！
+方法二：分治---两两链表合并---------关键点i<j,而不是i<=j!!!!!!!,如果取等，将会对同一条链表进行比较，地址相同，陷入死循环！！！！！
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         if(lists.length==0){return null;}
