@@ -1,0 +1,23 @@
+方法一：左括号数大于右括号数时，可以添加右括号
+class Solution {
+
+    List<String> list=new ArrayList<>();
+
+    public List<String> generateParenthesis(int n) {
+        generateString("",0,0,n);
+        return list;
+    }
+
+    public void generateString(String pre,int left,int right,int n){
+        if(pre.length()==2*n){list.add(pre);return;}
+        if(left>right){
+            generateString(pre+")",left,right+1,n);
+            if(left<n){
+                generateString(pre+"(",left+1,right,n);
+            }
+        }else{
+            generateString(pre+"(",left+1,right,n);
+        }
+    }
+
+}
