@@ -1,0 +1,69 @@
+方法一： 逐一比较，时间复杂度O(kN)
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        ListNode dummy=new ListNode(0);
+        ListNode cur=dummy;
+        
+        while(true){
+            int min=Integer.MAX_VALUE;
+            int index=0;
+            for(int i=0;i<lists.length;i++){
+                if(lists[i]==null){continue;}
+                if(lists[i].val<min){
+                    cur.next=lists[i];
+                    min=lists[i].val;
+                    index=i;
+                }
+            }
+            if(cur.next==null){break;}
+            lists[index]=lists[index].next;
+            cur=cur.next;
+        }
+        
+        return dummy.next;
+        
+    }
+}
+
+方法二：两两链表合并---------关键点i<j,而不是i<=j!!!!!!!,如果取等，将会对同一条链表进行比较，地址相同，陷入死循环！！！！！
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        if(lists.length==0){return null;}
+        int len=lists.length;
+        while(len>1){
+            int i=0;
+            int j=len-1;
+            while(i<j){---------------------------------------------！！！！！！！！！！！！！！重点
+                lists[i]=twoMerge(lists[i],lists[j]);  
+                i++;
+                j--;
+            }
+            len=(len+1)/2;
+        }
+        return lists[0];
+    }
+
+    public ListNode twoMerge(ListNode l1,ListNode l2){
+        ListNode dummy=new ListNode(0);
+        ListNode cur=dummy;
+        while(l1!=null&&l2!=null){
+            if(l1.val>l2.val){
+                cur.next=l2;
+                l2=l2.next;
+                cur=cur.next;
+            }else{
+                cur.next=l1;
+                l1=l1.next;
+                cur=cur.next;
+            }
+        }
+        if(l1==null){
+            cur.next=l2;
+        }else{
+            cur.next=l1;
+        }
+
+        return dummy.next;
+    }
+
+}
