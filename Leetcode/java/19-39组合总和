@@ -1,0 +1,36 @@
+方法一:  每次从数组中选一个数，下次迭代从该数索引处开始，前面不要，以防重复
+class Solution {
+
+    List<List<Integer>> list=new ArrayList<>();
+
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        for(int i=0;i<candidates.length;i++){
+            if(candidates[i]<=target){
+                List<Integer> li=new ArrayList<>();
+                li.add(candidates[i]);
+                functiom(li,candidates,target-candidates[i],i);
+            }
+        }
+        return list;
+    }
+
+    public void functiom(List<Integer> li,int[] nums,int target,int start){
+        if(target==0){list.add(li);return;}
+        boolean flag=false;
+        for(int i=start;i<nums.length;i++){
+            if(nums[i]<=target){
+                List<Integer> list=new ArrayList<>();
+                list.addAll(li);
+                list.add(nums[i]);
+                functiom(list,nums,target-nums[i],i);
+                flag=true;
+            }
+        }
+        if(flag==false){
+            return;
+        }
+    }
+
+}
+
+方法二：
