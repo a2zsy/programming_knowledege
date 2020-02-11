@@ -1,0 +1,21 @@
+方法一：正方形从大到小，对于每层，四个点是一次交换，一条边上循环即一层旋转完毕。
+class Solution {
+    public void rotate(int[][] matrix) {
+        int len=matrix.length;
+        int imin=0;
+        int imax=len-1;
+        while(imin<imax){
+            int k=0;
+            while(k<(imax-imin)){
+                int temp=matrix[imin][imin+k];
+                matrix[imin][imin+k]=matrix[imax-k][imin];
+                matrix[imax-k][imin]=matrix[imax][imax-k];
+                matrix[imax][imax-k]=matrix[imin+k][imax];
+                matrix[imin+k][imax]=temp;
+                k++;
+            }
+            imin++;
+            imax--;
+        }
+    }
+}
