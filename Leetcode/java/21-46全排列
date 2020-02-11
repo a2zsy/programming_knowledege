@@ -1,0 +1,35 @@
+方法一：利用set，每选中一个元素，就将它remove，并压入栈，然后迭代，然后重新添加到set，并从栈弹出。
+       栈内元素的排列顺序就是一种排列。
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> list =new ArrayList<>();
+        Stack<Integer> st=new Stack<>();
+        Set<Integer> set=new HashSet<>();
+        for(int i=0;i<nums.length;i++){
+            set.add(nums[i]);
+        }
+        function(list,nums,st,set);
+        return list;
+    }
+
+    public void function(List<List<Integer>> list,int[] nums,Stack<Integer> st,Set<Integer> set){
+        if(set.isEmpty()){
+            List<Integer> li=new ArrayList<>(st);
+            list.add(li);
+            return;
+        }
+        for(int i=0;i<nums.length;i++){
+            if(set.contains(nums[i])){
+                set.remove(nums[i]);
+                st.push(nums[i]);
+                function(list,nums,st,set);
+                set.add(nums[i]);
+                st.pop();
+            }
+        }
+    }
+
+}
+
+方法二：不用hashset标识哪些元素没有被选中，创建一个数组，该数组元素为1表示该位置已被选中
+方法三:深度优先遍历！！！！！！！！！！！！
