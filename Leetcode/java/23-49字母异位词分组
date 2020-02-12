@@ -54,4 +54,4 @@ class Solution {
 }
 
 方法二：
-将字符串转换成字符数组，排序，再转换成字符串，作为key，字符串本身作为值。最后将hashmap的值返回，即结果
+将字符串转换成字符数组，排序，再转换成字符串，作为key，字符串本身作为值。最后将hashmap的值返回， return new ArrayList(ans.values());
