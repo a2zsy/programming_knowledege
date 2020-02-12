@@ -1,0 +1,13 @@
+方法一：贪心算法，两个变量：包含当前元素的最大和，目前最大和
+class Solution {
+    public int maxSubArray(int[] nums) {
+        if(nums.length==0){return 0;}
+        int cursum=nums[0];
+        int maxsum=nums[0];
+        for(int i=1;i<nums.length;i++){
+            cursum=Math.max(nums[i],cursum+nums[i]);  //包含该元素的最大和
+            maxsum=Math.max(maxsum,cursum);//目前最大和
+        }
+        return maxsum;
+    }
+}
