@@ -1,0 +1,39 @@
+方法一：类似于荷兰国旗问题。本题设有两个指针，一个表示目前0的最大索引，一个表示目前2的最小索引，1不用表示。
+       只需要一趟扫描！！！
+class Solution {
+    public void sortColors(int[] nums) {
+        int p=-1;
+        int k=-1;
+        int q=nums.length;
+        int i=0;
+        while(i<nums.length){
+            if(nums[i]==2){
+                if(i<q){
+                    swap(nums,i,--q);
+                    continue;
+                }else{
+                    break;
+                }
+            }else if(nums[i]==0){
+                if(i==p+1){
+                    p++;
+                    i++;
+                    continue;
+                }else{
+                    swap(nums,i,++p);
+                    continue;
+                }
+            }else{
+                i++;
+            }
+        }
+    }
+
+    public void swap(int[] nums,int i,int j){
+        int temp=nums[i];
+        nums[i]=nums[j];
+        nums[j]=temp;
+    }
+}
+
+方法二：最简单直观的是，只有三个元素，所以可以先统计基数，再对数组重新赋值，只不过总共需要两趟扫描
