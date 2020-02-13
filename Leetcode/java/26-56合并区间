@@ -1,0 +1,46 @@
+方法一：String[] strs = List.toArray(new String[List.size()]); //list转换成数组的方法
+      一个hashmap（去重！！相同开头取较大结尾）,一个start数组，一个end数组，start数组排好序，依次改变end数组的元素。比较temp[1]>=starts[i+1]。
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        List list=new ArrayList();
+        Map<Integer,Integer> map=new HashMap<>();
+        for(int i=0;i<intervals.length;i++){
+            if(map.containsKey(intervals[i][0])){
+                map.put(intervals[i][0],Math.max(intervals[i][1],map.get(intervals[i][0])));
+            }else{
+                map.put(intervals[i][0],intervals[i][1]);
+            }
+        }
+        int[] starts=new int[map.size()];
+        int p=0;
+        for(int i:map.keySet()){
+            starts[p]=i;
+            p++;
+        }
+        Arrays.sort(starts);
+        int[] ends=new int[map.size()];
+        for(int i=0;i<map.size();i++){
+            ends[i]=map.get(starts[i]);
+        }
+        int i=0;
+        while(i<map.size()){
+            int[] temp=new int[2];
+            temp[0]=starts[i];
+            temp[1]=ends[i];
+            while((i+1)<map.size()&&temp[1]>=starts[i+1]){
+                temp[1]=Math.max(ends[i+1],temp[1]);
+                i++;
+            }
+            list.add(temp);
+            i++;
+        }
+        int size=list.size();
+        int[][] result=new int[size][2];
+        for(int j=0;j<size;j++){
+            int[] w=(int[])list.get(j);
+            result[j][0]=w[0];
+            result[j][1]=w[1];
+        }
+        return result;
+    }
+}
