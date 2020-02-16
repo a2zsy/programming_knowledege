@@ -1,1 +1,32 @@
-方法一：
+方法一：暴力 n的平方
+方法二：动态规划，dp[i]表示以该位置结尾的最长有效子串长度
+class Solution {
+    public int longestValidParentheses(String s) {
+        if(s.length()==0){return 0;}
+        int[] dp=new int[s.length()];
+        int result=0;
+        for(int i=1;i<s.length();i++){
+            if(s.charAt(i)==')'){
+                if(s.charAt(i-1)=='('){
+                    if(i>1){
+                        dp[i]=2+dp[i-2];
+                    }else{
+                        dp[i]=2;
+                    }
+                }else {
+                    int temp=dp[i-1];
+                    if(i-temp-1>=0&&s.charAt(i-temp-1)=='('){
+                        dp[i]=dp[i-1]+2;
+                        if(i-temp-1>0){
+                            dp[i]+=dp[i-temp-2];
+                        }
+                    }else{
+                        dp[i]=0;
+                    }
+                }
+            }
+            result=Math.max(result,dp[i]);
+        }
+        return result;
+    }
+}
