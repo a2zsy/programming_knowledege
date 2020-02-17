@@ -1,0 +1,49 @@
+方法一：自己摸索，对于每一根柱子，有自己的最大面积，从中求最大即可。
+        针对left数组和right数组的优化，怎么从前一个推后一个，分三种情况。
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        if(heights.length==0){return 0;}
+        int[] left=new int[heights.length];
+        int[] right=new int[heights.length];
+        right[heights.length-1]=heights.length-1;
+        for(int i=1;i<left.length;i++){
+            if(heights[i]>heights[i-1]){
+                left[i]=i;
+            }else if(heights[i]==heights[i-1]){
+                left[i]=left[i-1];
+            }else{
+                int cur=left[i-1];
+                while(cur>0){
+                    cur--;
+                    if(heights[cur]<heights[i]){
+                        cur++;
+                        break;
+                    }
+                }
+                left[i]=cur;
+            }
+        }
+        for(int i=heights.length-2;i>=0;i--){
+            if(heights[i]>heights[i+1]){
+                right[i]=i;
+            }else if(heights[i]==heights[i+1]){
+                right[i]=right[i+1];
+            }else{
+                int cur=right[i+1];
+                while(cur<heights.length-1){
+                    cur++;
+                    if(heights[cur]<heights[i]){
+                        cur--;
+                        break;
+                    }
+                }
+                right[i]=cur;
+            }
+        }
+        int result=0;
+        for(int i=0;i<heights.length;i++){
+            result=result<(right[i]-left[i]+1)*heights[i]?(right[i]-left[i]+1)*heights[i]:result;
+        }
+        return result;
+    }
+}
