@@ -1,0 +1,56 @@
+遇到子串问题，想到滑动窗口思想-------------注意！！！ 默认IntegerCache.low 是-128，Integer.high是127，
+                                    如果在这个区间内，他就会把变量i当做一个变量，放到内存中；但如果不在这个范围内，就会去new一个Integer对象，
+                                    而我在代码中，两个Integer值都不在这个范围内，所以jdk帮我new了两个实例，这样在用==，肯定是false。
+                                    所以如果要比较Integer的值，比较靠谱的是通过Integer.intValue();这样出来的就是int值，就可以直接比较了
+方法一：
+class Solution {
+    public String minWindow(String s, String t) {
+        int left=0;
+        int right=0;
+        int len=0;
+        int cur=0;
+        int match=0;
+        Map<Character,Integer> hs=new HashMap<>();
+        Map<Character,Integer> window=new HashMap<>();
+        for(int i=0;i<t.length();i++){
+            if(hs.containsKey(t.charAt(i))){
+                hs.put(t.charAt(i),hs.get(t.charAt(i))+1);
+            }else{
+                hs.put(t.charAt(i),1);
+            }
+        }
+        while(right<s.length()){
+            if(hs.containsKey(s.charAt(right))){
+                if(window.containsKey(s.charAt(right))){
+                    window.put(s.charAt(right),window.get(s.charAt(right))+1);
+                }else{
+                    window.put(s.charAt(right),1);
+                }
+                if(window.get(s.charAt(right)).intValue()==hs.get(s.charAt(right)).intValue()){
+                    match++;
+                }
+            }
+            while(match==hs.size()){
+                if(hs.containsKey(s.charAt(left))){
+                    window.put(s.charAt(left),window.get(s.charAt(left))-1);
+                    if(window.get(s.charAt(left)).intValue()<hs.get(s.charAt(left)).intValue()){
+                        match--;
+                        left++;
+                        if(len==0){
+                            len=right-left+2;
+                            cur=left-1;
+                        }else if(len>right-left+2){
+                            len=right-left+2;
+                            cur=left-1;
+                        }
+                        break;
+                    }
+                }
+                left++;
+            }    
+            right++;
+        }
+        if(len==0){return "";}
+        return s.substring(cur,cur+len);
+    }
+}
