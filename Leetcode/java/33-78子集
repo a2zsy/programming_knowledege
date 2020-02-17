@@ -1,0 +1,24 @@
+方法一：  回溯，压栈，出栈.
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>>  list=new ArrayList<>();
+        Stack<Integer> st=new Stack<Integer>();
+        for(int i=0;i<=nums.length;i++){
+            function(nums,list,i,st,0);
+        }
+        return list;
+    }
+
+    public void function(int[] nums,List<List<Integer>> list,int len,Stack<Integer> st,int index){
+        if(st.size()==len){
+            list.add(new ArrayList(st));
+            return;
+        }
+        for(int i=index;i<nums.length;i++){
+            st.push(nums[i]);
+            function(nums,list,len,st,i+1);
+            st.pop();
+        }
+    }
+
+}
