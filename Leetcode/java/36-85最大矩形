@@ -1,0 +1,35 @@
+方法一：遍历，以每元素为右下角的最大矩形。怎么简化复杂度，每元素的值表示其所在行以该元素结尾的连续的1的个数
+      这样求以某元素为右下角的最大矩形时，只需从其所在列往上找，遇到0停止，遇到大于0的数，长取两者较短一方，宽取高度即行差。
+      
+方法二：以上一题84为基础，在每一行上求最大矩形面积。用栈来求，时刻保证栈内元素是递增趋势，栈内存储索引。
+class Solution {
+    public int maximalRectangle(char[][] matrix) {
+        if(matrix.length==0){return 0;}
+        Stack<Integer> st=new Stack<>();
+        int[] heights=new int[matrix[0].length];
+        int result=0;
+        for(int i=0;i<matrix.length;i++){
+            for(int j=0;j<matrix[0].length;j++){
+                if(matrix[i][j]=='0'){
+                    heights[j]=0;
+                }else{
+                    heights[j]=heights[j]+1;
+                }
+            }
+            st.push(-1);
+            int k=0;
+            while(k<heights.length){
+                while(st.peek()!=-1&&heights[k]<heights[st.peek()]){
+                    result=Math.max(result,heights[st.pop()]*(k-st.peek()-1));
+                }
+                st.push(k);
+                k++;
+            }
+            while(st.peek()!=-1){
+                    result=Math.max(result,heights[st.pop()]*(k-st.peek()-1));
+            }
+
+        }
+        return result;
+    }
+}
