@@ -1,0 +1,53 @@
+方法一：递归，先左节点，再中节点，最后右节点。
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list=new ArrayList<Integer>();
+        function(list,root);
+        return list;
+    }
+
+
+    public void function(List<Integer> list,TreeNode node){
+        if(node==null){return;}
+        function(list,node.left);
+        list.add(node.val);
+        function(list,node.right);
+    }
+}
+
+方法二：用栈实现迭代--------------(后序遍历非递归用到两个栈)
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode node) {
+        List<Integer> list=new ArrayList<Integer>();
+        Stack<TreeNode> st=new Stack<>();
+        while(node!=null||!st.isEmpty()){
+            while(node!=null){
+                st.push(node);
+                node=node.left;
+            }
+            TreeNode temp=st.pop();
+            list.add(temp.val);
+            node=temp.right;
+        }
+        return list;
+    }
+
+}
