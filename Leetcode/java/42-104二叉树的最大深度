@@ -1,0 +1,27 @@
+方法一：与二叉树按层遍历一样。使用队列。
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root==null){return 0;}
+        int level=0;
+        Queue<TreeNode> queue=new LinkedList<>();
+        queue.add(root);
+        while(!queue.isEmpty()){
+            int len=queue.size();
+            for(int i=1;i<=len;i++){
+                TreeNode temp=queue.poll();
+                if(temp.left!=null){queue.add(temp.left);}
+                if(temp.right!=null){queue.add(temp.right);}
+            }
+            level++;
+        }
+        return level;
+    }
+}
+方法二：递归，（回溯）。两个子节点深度的最大值加一
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root==null){return 0;}
+        int max=Math.max(maxDepth(root.left),maxDepth(root.right));
+        return 1+max;
+    }
+}
